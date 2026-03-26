@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SolarWise</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🌞 SolarWise</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="assessment.html">Check Your Solar Potential</a></li>
+                <li><a href="learn.html">Solar Basics</a></li>
+                <li><a href="login.html" class="active">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1>Welcome Back</h1>
+            <p>Log in to save your assessments and track your progress</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username_or_email">Username or Email</label>
+                    <input type="text" id="username_or_email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                
+                <button type="submit" class="cta-button" style="width: 100%;">Log In</button>
+            </form>
+            
+            <div class="auth-footer">
+                Don't have an account? <a href="signup.html">Sign up here</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+            padding: 2rem;
+        }
+        
+        .auth-box {
+            max-width: 400px;
+            width: 100%;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .auth-box h1 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .auth-box p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #666;
+        }
+        
+        .auth-footer a {
+            color: #FF6B35;
+            text-decoration: none;
+        }
+        
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .nav-links .active {
+            color: #FF6B35;
+        }
+    </style>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

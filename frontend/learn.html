@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Basics - SolarWise</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🌞 SolarWise</div>
+            <ul class="nav-links" id="navLinks">
+                <!-- Will be populated by JavaScript -->
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="padding: 3rem 20px;">
+        <h1 style="text-align: center; margin-bottom: 2rem;">Solar Energy Basics</h1>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>How Solar Works</h3>
+                <p>Solar panels convert sunlight into electricity through photovoltaic cells. When sunlight hits the panels, it creates an electric field that generates DC electricity, which an inverter converts to AC power for your home.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Key Components</h3>
+                <ul style="text-align: left; margin-top: 1rem;">
+                    <li><strong>Solar Panels:</strong> Capture sunlight</li>
+                    <li><strong>Inverter:</strong> Converts DC to AC power</li>
+                    <li><strong>Racking:</strong> Mounts panels to roof</li>
+                    <li><strong>Monitoring:</strong> Tracks system performance</li>
+                    <li><strong>Battery (optional):</strong> Stores excess energy</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <h3>System Types</h3>
+                <ul style="text-align: left; margin-top: 1rem;">
+                    <li><strong>Grid-Tied:</strong> Connected to utility, no battery</li>
+                    <li><strong>Hybrid:</strong> Grid-connected with battery backup</li>
+                    <li><strong>Off-Grid:</strong> Complete independence with batteries</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="margin: 3rem 0;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Solar Potential Factors</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px;">
+                    <h3 style="color: #2e7d32;">✅ What Helps</h3>
+                    <ul style="margin-top: 1rem;">
+                        <li>South-facing roof (north-facing in southern hemisphere)</li>
+                        <li>Minimal shade from trees/buildings</li>
+                        <li>Roof age under 10 years</li>
+                        <li>High electricity rates</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #ffebee; padding: 1.5rem; border-radius: 10px;">
+                    <h3 style="color: #c62828;">❌ What Hinders</h3>
+                    <ul style="margin-top: 1rem;">
+                        <li>Heavy shade throughout day</li>
+                        <li>North-facing roof (northern hemisphere)</li>
+                        <li>Roof needing replacement soon</li>
+                        <li>HOA restrictions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #f9f9f9; padding: 2rem; border-radius: 10px; margin: 3rem 0;">
+            <h3 style="margin-bottom: 1rem;">Quick Solar Math</h3>
+            <p><strong>1 kW of solar panels</strong> typically produces:</p>
+            <ul>
+                <li>3-5 kWh per day (varies by location)</li>
+                <li>1,000-1,500 kWh per year</li>
+                <li>Requires about 100 sq ft of roof space</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Average US home</strong> uses ~900 kWh per month and needs 6-8 kW system</p>
+        </div>
+        
+        <div style="text-align: center; margin: 3rem 0;">
+            <h3>Ready to check your home?</h3>
+            <a href="assessment.html" class="cta-button" style="margin-top: 1rem; display: inline-block;">Start Free Assessment</a>
+        </div>
+    </div>
+
+    <style>
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .feature-card h3 {
+            color: #FF6B35;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-button {
+            background: #FF6B35;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: #ff5722;
+        }
+    </style>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

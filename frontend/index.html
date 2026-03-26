@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolarWise - Solar Energy Education Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🌞 SolarWise</div>
+            <ul class="nav-links" id="navLinks">
+                <!-- Will be populated by JavaScript -->
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Discover Your Home's Solar Potential</h1>
+            <p class="hero-subtitle">Free, instant assessment using global satellite data. Create an account to save your results!</p>
+            <a href="assessment.html" class="cta-button">Start Your Assessment →</a>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>1. Enter Location</h3>
+                    <p>Share your coordinates or city name. We use global satellite data from NASA.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>2. Get Your Score</h3>
+                    <p>Receive a solar potential score from 0-100 based on real solar radiation data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>3. See Savings</h3>
+                    <p>Estimate potential energy savings and system size for your home.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quick-assessment">
+        <div class="container">
+            <h2>Quick Solar Check</h2>
+            <p>Enter your monthly electricity bill for a rough estimate</p>
+            <form id="quickForm" class="quick-form">
+                <input type="number" id="quickBill" placeholder="Monthly bill ($)" min="0" step="10" required>
+                <button type="submit" class="btn-secondary">Get Quick Estimate</button>
+            </form>
+            <div id="quickResult" class="quick-result" style="display: none;"></div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <div class="container">
+            <h2>Why Sign Up?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <span class="benefit-icon">💾</span>
+                    <h3>Save Assessments</h3>
+                    <p>Keep all your solar assessments forever</p>
+                </div>
+                <div class="benefit-item">
+                    <span class="benefit-icon">📈</span>
+                    <h3>Track Progress</h3>
+                    <p>See how your solar potential changes over time</p>
+                </div>
+                <div class="benefit-item">
+                    <span class="benefit-icon">🏠</span>
+                    <h3>Multiple Properties</h3>
+                    <p>Assess multiple homes or properties</p>
+                </div>
+                <div class="benefit-item">
+                    <span class="benefit-icon">📧</span>
+                    <h3>Email Updates</h3>
+                    <p>Get notified about incentives and updates</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Solar Results - SolarWise</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🌞 SolarWise</div>
+            <ul class="nav-links" id="navLinks">
+                <!-- Will be populated by JavaScript -->
+            </ul>
+        </div>
+    </nav>
+
+    <div class="results-container">
+        <div class="score-card">
+            <span class="score-number" id="scoreValue">--</span>
+            <span class="score-label">Solar Potential Score</span>
+        </div>
+        
+        <div class="results-grid">
+            <div class="result-card">
+                <span class="result-value" id="systemSize">--</span>
+                <span>Recommended System Size</span>
+            </div>
+            <div class="result-card">
+                <span class="result-value" id="annualProduction">--</span>
+                <span>Annual Production</span>
+            </div>
+            <div class="result-card">
+                <span class="result-value" id="annualSavings">--</span>
+                <span>Estimated Annual Savings</span>
+            </div>
+            <div class="result-card">
+                <span class="result-value" id="coverage">--</span>
+                <span>Energy Coverage</span>
+            </div>
+        </div>
+        
+        <div class="recommendation-box" id="recommendation">
+            <!-- Dynamic recommendation will go here -->
+        </div>
+        
+        <div style="margin: 2rem 0; text-align: center;">
+            <h3>Score Breakdown</h3>
+            <canvas id="scoreChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+            <a href="assessment.html" class="btn-secondary">← New Assessment</a>
+            <a href="learn.html" class="cta-button">Learn About Solar →</a>
+        </div>
+    </div>
+
+    <style>
+        .results-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+        }
+        
+        .score-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .score-number {
+            font-size: 4rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+        
+        .score-label {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .result-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FF6B35;
+            display: block;
+        }
+        
+        .recommendation-box {
+            background: #e3f2fd;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        
+        .btn-secondary {
+            background: #4ECDC4;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: #45b7aa;
+        }
+        
+        .cta-button {
+            background: #FF6B35;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: #ff5722;
+        }
+    </style>
+
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
