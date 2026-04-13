@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutBtn.addEventListener('click', handleLogout);
     }
     
+    // Handle delete account button - ADD THIS SECTION
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    if (deleteAccountBtn) {
+        console.log("Delete account button found");
+        deleteAccountBtn.addEventListener('click', handleDeleteAccount);
+    }
+    
     // Load user profile if on profile page
     if (window.location.pathname.includes('profile.html')) {
         loadUserProfile();
@@ -31,12 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update navigation based on auth status
     updateNavigation();
 });
-// Handle delete account button
-const deleteAccountBtn = document.getElementById('deleteAccountBtn');
-if (deleteAccountBtn) {
-    console.log("Delete account button found");
-    deleteAccountBtn.addEventListener('click', handleDeleteAccount);
-}
 
 // Handle login
 async function handleLogin(e) {
@@ -147,6 +148,38 @@ async function handleLogout() {
     }
 }
 
+// Handle delete account - ADD THIS NEW FUNCTION
+async function handleDeleteAccount() {
+    console.log("Delete account function called");
+    
+    const confirmMessage = '⚠️ WARNING: This will permanently delete your account and all your assessments. This action cannot be undone. Are you sure?';
+    
+    if (confirm(confirmMessage)) {
+        const confirmation = prompt('Type "DELETE" to confirm account deletion:');
+        if (confirmation === 'DELETE') {
+            try {
+                const response = await fetch('http://localhost:5000/api/delete-account', {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('Account deleted successfully');
+                    sessionStorage.removeItem('user');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Error deleting account: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Delete account error:', error);
+                alert('Error deleting account. Please try again.');
+            }
+        } else {
+            alert('Account deletion cancelled');
+        }
+    }
+}
+
 // Check authentication status
 async function checkAuthStatus() {
     try {
@@ -248,7 +281,7 @@ async function loadUserAssessments() {
                         </div>
                         <div class="assessment-detail">
                             <strong>Annual Savings</strong>
-                            $${assessment.estimated_savings}
+                            ₹${assessment.estimated_savings?.toLocaleString() || 0}
                         </div>
                         <div class="assessment-detail">
                             <strong>Location</strong>
