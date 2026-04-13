@@ -31,6 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update navigation based on auth status
     updateNavigation();
 });
+// Handle delete account button
+const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+if (deleteAccountBtn) {
+    console.log("Delete account button found");
+    deleteAccountBtn.addEventListener('click', handleDeleteAccount);
+}
 
 // Handle login
 async function handleLogin(e) {

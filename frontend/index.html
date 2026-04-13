@@ -17,7 +17,7 @@
         </div>
     </nav>
 
-    <header class="hero" style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 50%, #FFB347 100%); background-size: 200% 200%; animation: gradientShift 6s ease infinite;">
+    <header class="hero" style="padding: 10rem 0; background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 20%, #FFB347 40%, #FF8E53 60%, #FFA726 80%, #FF6B35 100%); background-size: 400% 400%; animation: waveGradient 10s ease infinite;">
         <div class="container">
             <h1>Discover Your Home's Solar Potential</h1>
             <p class="hero-subtitle">Free, instant assessment using global satellite data. Save your results in ₹!</p>
@@ -45,18 +45,6 @@
                     <p>Estimate potential energy savings in Indian Rupees.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section class="quick-assessment">
-        <div class="container">
-            <h2>Quick Solar Check</h2>
-            <p>Enter your monthly electricity bill for a rough estimate</p>
-            <form id="quickForm" class="quick-form">
-                <input type="number" id="quickBill" placeholder="Monthly bill (₹)" min="0" step="100" required>
-                <button type="submit" class="btn-secondary">Get Quick Estimate</button>
-            </form>
-            <div id="quickResult" class="quick-result" style="display: none;"></div>
         </div>
     </section>
 
@@ -89,9 +77,22 @@
     </section>
 
     <style>
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        @keyframes waveGradient {
+            0% { 
+                background-position: 0% 50%; 
+            }
+            25% { 
+                background-position: 100% 50%; 
+            }
+            50% { 
+                background-position: 100% 100%; 
+            }
+            75% { 
+                background-position: 0% 100%; 
+            }
+            100% { 
+                background-position: 0% 50%; 
+            }
         }
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
