@@ -336,3 +336,40 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(198,40,40,0.3);
 }
+
+/* Extra Dynamic Touches */
+.quick-form input:focus {
+    outline: none;
+    box-shadow: 0 0 20px rgba(255,107,53,0.4);
+    transform: scale(1.02);
+    transition: all 0.3s;
+}
+
+.component-card::before,
+.system-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.component-card:hover::before,
+.system-card:hover::before {
+    left: 100%;
+}
+
+/* Pulse for CTAs */
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255,107,53,0.5); }
+    50% { box-shadow: 0 0 40px rgba(255,107,53,0.8); }
+}
+
+.cta-button:active {
+    animation: pulseGlow 0.3s ease;
+}
+
+

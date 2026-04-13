@@ -17,7 +17,7 @@
         </div>
     </nav>
 
-    <div class="hero" style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%); padding: 3rem 0;">
+    <div class="hero" style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%); background-size: 200% 200%; animation: gradientShift 8s ease infinite; padding: 3rem 0;">
         <div class="container">
             <h1 style="font-size: 2.5rem;">☀️ Solar Energy Basics</h1>
             <p style="font-size: 1.2rem;">Everything you need to know about solar power for your home</p>
@@ -26,26 +26,26 @@
 
     <div class="container" style="padding: 3rem 20px;">
         <!-- Interactive Solar Diagram -->
-        <div class="solar-diagram" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 2rem; margin-bottom: 3rem; text-align: center; color: white;">
+        <div class="solar-diagram" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 2rem; margin-bottom: 3rem; text-align: center; color: white; position: relative; overflow: hidden;">
             <h2>How Solar Works 🔆</h2>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 2rem;">
-                <div class="step">
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 2rem; align-items: center;">
+                <div class="step" style="animation: pulse 2s infinite;">
                     <div class="step-icon" style="font-size: 3rem;">☀️</div>
                     <p><strong>1. Sunlight</strong><br>Solar panels capture sunlight</p>
                 </div>
-                <div style="font-size: 2rem;">→</div>
+                <div class="arrow" style="font-size: 2.5rem; animation: arrowMove 2s infinite; color: #FFD700;">➤</div>
                 <div class="step">
-                    <div class="step-icon" style="font-size: 3rem;">🔌</div>
+                    <div class="step-icon" style="font-size: 3rem;">🛸🔋</div>
                     <p><strong>2. DC Power</strong><br>Panels generate DC electricity</p>
                 </div>
-                <div style="font-size: 2rem;">→</div>
+                <div class="arrow" style="font-size: 2.5rem; animation: arrowMove 2s infinite 0.5s; color: #FFD700;">➤</div>
                 <div class="step">
-                    <div class="step-icon" style="font-size: 3rem;">🔄</div>
+                    <div class="step-icon" style="font-size: 3rem;">⚡🔄</div>
                     <p><strong>3. Inverter</strong><br>Converts DC to AC power</p>
                 </div>
-                <div style="font-size: 2rem;">→</div>
+                <div class="arrow" style="font-size: 2.5rem; animation: arrowMove 2s infinite 1s; color: #FFD700;">➤</div>
                 <div class="step">
-                    <div class="step-icon" style="font-size: 3rem;">🏠</div>
+                    <div class="step-icon" style="font-size: 3rem;">🏠⚡</div>
                     <p><strong>4. Your Home</strong><br>Powers your appliances</p>
                 </div>
             </div>
@@ -55,8 +55,8 @@
         <h2 style="text-align: center; margin: 3rem 0; font-size: 2rem; background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%); -webkit-background-clip: text; background-clip: text; color: transparent;">Key Components 🔧</h2>
         
         <div class="components-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; cursor: pointer;">
-                <div style="font-size: 3rem;">🪟</div>
+            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; position: relative; overflow: hidden;">
+                <div style="font-size: 3rem;">🛸🔋</div>
                 <h3>Solar Panels</h3>
                 <p>Capture sunlight and convert to DC electricity</p>
                 <div class="component-detail" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 10px;">
@@ -64,8 +64,8 @@
                 </div>
             </div>
             
-            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; cursor: pointer;">
-                <div style="font-size: 3rem;">🔄</div>
+            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; position: relative; overflow: hidden;">
+                <div style="font-size: 3rem;">⚡🔄</div>
                 <h3>Inverter</h3>
                 <p>Converts DC to AC power for your home</p>
                 <div class="component-detail" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 10px;">
@@ -73,8 +73,8 @@
                 </div>
             </div>
             
-            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; cursor: pointer;">
-                <div style="font-size: 3rem;">🔋</div>
+            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; position: relative; overflow: hidden;">
+                <div style="font-size: 3rem;">🔋⚡</div>
                 <h3>Battery Storage</h3>
                 <p>Store excess energy for nighttime use</p>
                 <div class="component-detail" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 10px;">
@@ -82,8 +82,8 @@
                 </div>
             </div>
             
-            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; cursor: pointer;">
-                <div style="font-size: 3rem;">📊</div>
+            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; position: relative; overflow: hidden;">
+                <div style="font-size: 3rem;">📱📊</div>
                 <h3>Monitoring System</h3>
                 <p>Track your solar production in real-time</p>
                 <div class="component-detail" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 10px;">
@@ -92,12 +92,12 @@
             </div>
         </div>
 
-        <!-- System Types Comparison -->
+        <!-- System Types Comparison (unchanged for brevity, but add hover styles below) -->
         <h2 style="text-align: center; margin: 3rem 0; font-size: 2rem;">System Types ⚡</h2>
         
         <div class="system-types" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-            <div class="system-card" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center;">
-                <div style="font-size: 2.5rem;">🏠</div>
+            <div class="system-card" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+                <div style="font-size: 2.5rem;">🏠⚡</div>
                 <h3>Grid-Tied</h3>
                 <p>Connected to utility grid, no battery needed</p>
                 <ul style="text-align: left; margin-top: 1rem;">
@@ -107,8 +107,8 @@
                 </ul>
             </div>
             
-            <div class="system-card" style="background: linear-gradient(135deg, #FF9800 0%, #fb8c00 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center;">
-                <div style="font-size: 2.5rem;">🏠🔋</div>
+            <div class="system-card" style="background: linear-gradient(135deg, #FF9800 0%, #fb8c00 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+                <div style="font-size: 2.5rem;">🏠🔋⚡</div>
                 <h3>Hybrid</h3>
                 <p>Grid-connected with battery backup</p>
                 <ul style="text-align: left; margin-top: 1rem;">
@@ -118,8 +118,8 @@
                 </ul>
             </div>
             
-            <div class="system-card" style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center;">
-                <div style="font-size: 2.5rem;">🏔️</div>
+            <div class="system-card" style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+                <div style="font-size: 2.5rem;">🏔️🔋</div>
                 <h3>Off-Grid</h3>
                 <p>Complete independence from utility</p>
                 <ul style="text-align: left; margin-top: 1rem;">
@@ -130,8 +130,8 @@
             </div>
         </div>
 
-        <!-- Solar Calculator -->
-        <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%); border-radius: 20px; padding: 2rem; margin: 3rem 0; color: white;">
+        <!-- Solar Calculator with pulse -->
+        <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%); background-size: 200% 200%; animation: gradientShift 4s ease infinite; border-radius: 20px; padding: 2rem; margin: 3rem 0; color: white;">
             <h2 style="text-align: center;">Quick Solar Savings Calculator 🧮</h2>
             <div style="max-width: 400px; margin: 2rem auto;">
                 <input type="number" id="calcBill" placeholder="Monthly bill (₹)" style="width: 100%; padding: 1rem; border-radius: 10px; border: none; margin-bottom: 1rem;">
@@ -146,16 +146,32 @@
         </div>
     </div>
 
+    <style>
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes arrowMove {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+        .component-card:hover, .system-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .step:hover .step-icon { transform: scale(1.1); transition: transform 0.3s; }
+    </style>
+
     <script>
         // Interactive component cards
         document.querySelectorAll('.component-card').forEach(card => {
             card.addEventListener('click', function() {
                 const detail = this.querySelector('.component-detail');
-                if (detail.style.display === 'none' || !detail.style.display) {
-                    detail.style.display = 'block';
-                } else {
-                    detail.style.display = 'none';
-                }
+                detail.style.display = detail.style.display === 'none' || !detail.style.display ? 'block' : 'none';
             });
         });
         
@@ -168,8 +184,8 @@
             }
             
             const annualBill = bill * 12;
-            const potentialSavings = annualBill * 0.7; // 70% savings estimate
-            const paybackYears = (150000 / potentialSavings).toFixed(1); // ₹1.5L system cost
+            const potentialSavings = annualBill * 0.7;
+            const paybackYears = (150000 / potentialSavings).toFixed(1);
             
             const resultDiv = document.getElementById('calcResult');
             resultDiv.style.display = 'block';

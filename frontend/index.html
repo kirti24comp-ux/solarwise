@@ -17,7 +17,7 @@
         </div>
     </nav>
 
-    <header class="hero">
+    <header class="hero" style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 50%, #FFB347 100%); background-size: 200% 200%; animation: gradientShift 6s ease infinite;">
         <div class="container">
             <h1>Discover Your Home's Solar Potential</h1>
             <p class="hero-subtitle">Free, instant assessment using global satellite data. Save your results in ₹!</p>
@@ -29,18 +29,18 @@
         <div class="container">
             <h2>How It Works</h2>
             <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📍</div>
+                <div class="feature-card" style="animation: float 3s ease-in-out infinite;">
+                    <div class="feature-icon" style="font-size: 3.5rem;">📍🏠</div>
                     <h3>1. Enter Location</h3>
                     <p>Share your city name or coordinates. We use NASA satellite data.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
+                <div class="feature-card" style="animation: float 3s ease-in-out infinite 0.5s both;">
+                    <div class="feature-icon" style="font-size: 3.5rem;">📊☀️</div>
                     <h3>2. Get Your Score</h3>
                     <p>Receive a solar potential score from 0-100 based on real data.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
+                <div class="feature-card" style="animation: float 3s ease-in-out infinite 1s both;">
+                    <div class="feature-icon" style="font-size: 3.5rem;">💰⚡</div>
                     <h3>3. See Savings in ₹</h3>
                     <p>Estimate potential energy savings in Indian Rupees.</p>
                 </div>
@@ -64,29 +64,44 @@
         <div class="container">
             <h2>Why Sign Up?</h2>
             <div class="benefits-grid">
-                <div class="benefit-item">
-                    <span class="benefit-icon">💾</span>
+                <div class="benefit-item" style="transition: transform 0.4s, box-shadow 0.4s;">
+                    <span class="benefit-icon" style="font-size: 3rem;">💾☀️</span>
                     <h3>Save Assessments</h3>
                     <p>Keep all your solar assessments forever</p>
                 </div>
-                <div class="benefit-item">
-                    <span class="benefit-icon">📈</span>
+                <div class="benefit-item" style="transition: transform 0.4s, box-shadow 0.4s;">
+                    <span class="benefit-icon" style="font-size: 3rem;">📈⚡</span>
                     <h3>Track Progress</h3>
                     <p>See how your solar potential changes over time</p>
                 </div>
-                <div class="benefit-item">
-                    <span class="benefit-icon">🏠</span>
+                <div class="benefit-item" style="transition: transform 0.4s, box-shadow 0.4s;">
+                    <span class="benefit-icon" style="font-size: 3rem;">🏠🔋</span>
                     <h3>Multiple Properties</h3>
                     <p>Assess multiple homes or properties</p>
                 </div>
-                <div class="benefit-item">
-                    <span class="benefit-icon">📧</span>
+                <div class="benefit-item" style="transition: transform 0.4s, box-shadow 0.4s;">
+                    <span class="benefit-icon" style="font-size: 3rem;">📧🌞</span>
                     <h3>Email Updates</h3>
                     <p>Get notified about incentives and updates</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <style>
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .feature-card:hover, .benefit-item:hover {
+            transform: translateY(-10px) scale(1.02) !important;
+            box-shadow: 0 20px 40px rgba(255,107,53,0.3) !important;
+        }
+    </style>
 
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
