@@ -16,6 +16,21 @@ class AuthManager:
         password_hash = f"{salt}:{hash_obj.hexdigest()}"
         return password_hash
     
+
+    # Add this method to the AuthManager class in backend/auth.py
+
+    def delete_account(self, user_id):
+        """Delete user account and all associated data"""
+        cursor = self.db.cursor()
+        
+        # Sessions and assessments will be deleted via CASCADE
+        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+        
+        self.db.commit()
+        cursor.close()
+        
+        return {'success': True}
+    
     def verify_password(self, password, stored_hash):
         """Verify password against stored hash"""
         try:

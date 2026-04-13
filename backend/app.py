@@ -4,44 +4,35 @@ from flask_cors import CORS
 import mysql.connector
 import requests
 import os
+import secrets
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from datetime import datetime
 from auth import AuthManager
 
-# Load .env file
-dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
-load_dotenv(dotenv_path)
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_hex(32))
 CORS(app, supports_credentials=True, origins=['http://localhost:8000'])
 
-# Database connection - CORRECT VERSION
-try:
-    db = mysql.connector.connect(
-        host=os.getenv('MYSQL_HOST', 'localhost'),
-        user=os.getenv('MYSQL_USER', 'root'),
-        password=os.getenv('MYSQL_PASSWORD', ''),  # ← CORRECT: Use MYSQL_PASSWORD
-        database=os.getenv('MYSQL_DB', 'solarwise'),
-        port=int(os.getenv('MYSQL_PORT', 3306))
-    )
-    print("✅ Database connected successfully!")
-except Exception as e:
-    print(f"❌ Database connection failed: {e}")
-    db = None
+# Database connection
+db = mysql.connector.connect(
+    host=os.getenv('MYSQL_HOST', 'localhost'),
+    user=os.getenv('MYSQL_USER', 'root'),
+    password=os.getenv('MYSQL_PASSWORD', ''),
+    database=os.getenv('MYSQL_DB', 'solarwise')
+)
 
-# Initialize Auth Manager
-if db:
-    auth_manager = AuthManager(db)
-else:
-    auth_manager = None
+auth_manager = AuthManager(db)
 
-# NASA POWER API endpoint
+# NASA POWER API
 NASA_API = "https://power.larc.nasa.gov/api/power"
 
-# ============================================
-# AUTHENTICATION ROUTES
-# ============================================
+# Currency config
+AVG_COST_PER_KWH = 7.0  # ₹ per kWh
+
+# ============ AUTHENTICATION ROUTES ============
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -106,16 +97,35 @@ def get_user_assessments():
     assessments = auth_manager.get_user_assessments(user['id'])
     return jsonify({'success': True, 'assessments': assessments})
 
-# ============================================
-# SOLAR ASSESSMENT ROUTES
-# ============================================
+@app.route('/api/delete-account', methods=['DELETE'])
+def delete_account():
+    """Delete user account and all associated data"""
+    session_token = request.cookies.get('session_token')
+    user = auth_manager.validate_session(session_token)
+    
+    if not user:
+        return jsonify({'success': False, 'error': 'Not logged in'}), 401
+    
+    # Delete user (cascade will delete sessions and assessments)
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM users WHERE id = %s", (user['id'],))
+    db.commit()
+    cursor.close()
+    
+    # Clear session cookie
+    response = make_response(jsonify({'success': True, 'message': 'Account deleted successfully'}))
+    response.set_cookie('session_token', '', expires=0)
+    
+    return response
+
+# ============ SOLAR ASSESSMENT ROUTES ============
 
 @app.route('/api/assess-solar', methods=['POST'])
 def assess_solar():
     data = request.json
     lat = data['lat']
     lon = data['lon']
-    monthly_bill = data.get('monthly_bill', 150)
+    monthly_bill_rupees = data.get('monthly_bill', 1500)  # Default ₹1500
     roof_area = data.get('roof_area', 500)
     shading = data.get('shading', 'moderate')
     roof_condition = data.get('roof_condition', 'good')
@@ -124,29 +134,25 @@ def assess_solar():
     # Get solar data from NASA API
     solar_data = get_nasa_solar_data(lat, lon)
     
-    # Get weather data from OpenWeatherMap
-    weather_data = get_weather_data(lat, lon)
-    
-    # Calculate solar potential score
-    result = calculate_solar_potential(
+    # Calculate solar potential score (in Rupees)
+    result = calculate_solar_potential_rupees(
         solar_data, 
-        weather_data, 
-        monthly_bill, 
+        monthly_bill_rupees, 
         roof_area, 
         shading,
         lat
     )
     
-    # Add metadata to result
+    # Add metadata
     result['lat'] = lat
     result['lon'] = lon
     result['location_name'] = location_name
-    result['monthly_bill'] = monthly_bill
+    result['monthly_bill'] = monthly_bill_rupees
     result['roof_area'] = roof_area
     result['shading'] = shading
     result['roof_condition'] = roof_condition
     
-    # Save assessment (with user if logged in)
+    # Save assessment
     session_token = request.cookies.get('session_token')
     user = auth_manager.validate_session(session_token)
     
@@ -180,48 +186,29 @@ def get_nasa_solar_data(lat, lon):
     
     return None
 
-def get_weather_data(lat, lon):
-    """Get weather data from OpenWeatherMap"""
-    api_key = os.getenv('OPENWEATHER_API_KEY')
-    if not api_key:
-        return None
+def calculate_solar_potential_rupees(solar_data, monthly_bill_rupees, roof_area, shading, lat):
+    """Calculate solar potential with ₹ currency"""
     
-    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric"
-    
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json()
-    except Exception as e:
-        print(f"Weather API error: {e}")
-        return None
-    
-    return None
-
-def calculate_solar_potential(solar_data, weather_data, monthly_bill, roof_area, shading, lat):
-    """Calculate solar potential score (0-100)"""
-    
-    # Extract solar radiation (kWh/m²/day)
+    # Extract solar radiation
     if solar_data and 'properties' in solar_data:
         solar_radiation = extract_solar_radiation(solar_data)
     else:
         solar_radiation = approximate_solar_by_latitude(lat)
     
-    # Adjust for shading
+    # Shading factors
     shading_factors = {'low': 0.9, 'moderate': 0.7, 'heavy': 0.4}
     shading_factor = shading_factors.get(shading, 0.7)
     
-    # Calculate potential annual production
+    # Calculate system size
     system_size_kw = (roof_area / 100) * 0.7
     daily_production = system_size_kw * solar_radiation * shading_factor
     annual_production_kwh = daily_production * 365
     
-    # Calculate savings
-    avg_cost_per_kwh = 0.13
-    monthly_usage_kwh = monthly_bill / avg_cost_per_kwh
+    # Calculate savings in Rupees
+    monthly_usage_kwh = monthly_bill_rupees / AVG_COST_PER_KWH
     annual_usage_kwh = monthly_usage_kwh * 12
-    
     coverage_percent = min(100, (annual_production_kwh / annual_usage_kwh) * 100)
+    annual_savings_rupees = annual_production_kwh * AVG_COST_PER_KWH
     
     # Calculate score components
     score_components = {
@@ -237,31 +224,28 @@ def calculate_solar_potential(solar_data, weather_data, monthly_bill, roof_area,
         'solar_potential_score': round(total_score),
         'estimated_system_size_kw': round(system_size_kw, 1),
         'annual_production_kwh': round(annual_production_kwh),
-        'estimated_savings_per_year': round(annual_production_kwh * avg_cost_per_kwh, 2),
+        'estimated_savings_per_year': round(annual_savings_rupees, 2),
         'coverage_percentage': round(coverage_percent),
         'recommendation': get_recommendation(total_score),
         'solar_radiation_kwh': round(solar_radiation, 2),
+        'currency_symbol': '₹',
         'score_breakdown': score_components
     }
 
 def extract_solar_radiation(solar_data):
-    """Extract solar radiation from NASA API response"""
     try:
         properties = solar_data.get('properties', {})
         parameter = properties.get('parameter', {})
         allsky = parameter.get('ALLSKY_SFC_SW_DWN', {})
-        
         if allsky:
             values = list(allsky.values())
             if values:
                 return sum(values) / len(values)
     except:
         pass
-    
     return 4.5
 
 def approximate_solar_by_latitude(lat):
-    """Fallback function to estimate solar radiation by latitude"""
     lat_abs = abs(lat)
     if lat_abs < 23.5:
         return 5.5
@@ -283,9 +267,7 @@ def get_recommendation(score):
         return "Limited potential. You might want to explore community solar options instead."
 
 def save_guest_assessment(data, result, request):
-    """Save assessment for guest users"""
     cursor = db.cursor()
-    
     cursor.execute("""
         INSERT INTO assessments (
             session_id, location_lat, location_lon, location_name,
@@ -308,7 +290,6 @@ def save_guest_assessment(data, result, request):
         result.get('estimated_savings_per_year'),
         result.get('coverage_percentage')
     ))
-    
     db.commit()
     cursor.close()
 
