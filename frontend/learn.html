@@ -5,125 +5,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solar Basics - SolarWise</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo">🌞 SolarWise</div>
             <ul class="nav-links" id="navLinks">
-                <!-- Will be populated by JavaScript -->
+                <!-- Populated by JavaScript -->
             </ul>
         </div>
     </nav>
 
-    <div class="container" style="padding: 3rem 20px;">
-        <h1 style="text-align: center; margin-bottom: 2rem;">Solar Energy Basics</h1>
-        
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>How Solar Works</h3>
-                <p>Solar panels convert sunlight into electricity through photovoltaic cells. When sunlight hits the panels, it creates an electric field that generates DC electricity, which an inverter converts to AC power for your home.</p>
-            </div>
-            
-            <div class="feature-card">
-                <h3>Key Components</h3>
-                <ul style="text-align: left; margin-top: 1rem;">
-                    <li><strong>Solar Panels:</strong> Capture sunlight</li>
-                    <li><strong>Inverter:</strong> Converts DC to AC power</li>
-                    <li><strong>Racking:</strong> Mounts panels to roof</li>
-                    <li><strong>Monitoring:</strong> Tracks system performance</li>
-                    <li><strong>Battery (optional):</strong> Stores excess energy</li>
-                </ul>
-            </div>
-            
-            <div class="feature-card">
-                <h3>System Types</h3>
-                <ul style="text-align: left; margin-top: 1rem;">
-                    <li><strong>Grid-Tied:</strong> Connected to utility, no battery</li>
-                    <li><strong>Hybrid:</strong> Grid-connected with battery backup</li>
-                    <li><strong>Off-Grid:</strong> Complete independence with batteries</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div style="margin: 3rem 0;">
-            <h2 style="text-align: center; margin-bottom: 2rem;">Solar Potential Factors</h2>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px;">
-                    <h3 style="color: #2e7d32;">✅ What Helps</h3>
-                    <ul style="margin-top: 1rem;">
-                        <li>South-facing roof (north-facing in southern hemisphere)</li>
-                        <li>Minimal shade from trees/buildings</li>
-                        <li>Roof age under 10 years</li>
-                        <li>High electricity rates</li>
-                    </ul>
-                </div>
-                
-                <div style="background: #ffebee; padding: 1.5rem; border-radius: 10px;">
-                    <h3 style="color: #c62828;">❌ What Hinders</h3>
-                    <ul style="margin-top: 1rem;">
-                        <li>Heavy shade throughout day</li>
-                        <li>North-facing roof (northern hemisphere)</li>
-                        <li>Roof needing replacement soon</li>
-                        <li>HOA restrictions</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <div style="background: #f9f9f9; padding: 2rem; border-radius: 10px; margin: 3rem 0;">
-            <h3 style="margin-bottom: 1rem;">Quick Solar Math</h3>
-            <p><strong>1 kW of solar panels</strong> typically produces:</p>
-            <ul>
-                <li>3-5 kWh per day (varies by location)</li>
-                <li>1,000-1,500 kWh per year</li>
-                <li>Requires about 100 sq ft of roof space</li>
-            </ul>
-            <p style="margin-top: 1rem;"><strong>Average US home</strong> uses ~900 kWh per month and needs 6-8 kW system</p>
-        </div>
-        
-        <div style="text-align: center; margin: 3rem 0;">
-            <h3>Ready to check your home?</h3>
-            <a href="assessment.html" class="cta-button" style="margin-top: 1rem; display: inline-block;">Start Free Assessment</a>
+    <div class="hero" style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%); padding: 3rem 0;">
+        <div class="container">
+            <h1 style="font-size: 2.5rem;">☀️ Solar Energy Basics</h1>
+            <p style="font-size: 1.2rem;">Everything you need to know about solar power for your home</p>
         </div>
     </div>
 
-    <style>
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .feature-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .feature-card h3 {
-            color: #FF6B35;
-            margin-bottom: 1rem;
-        }
-        
-        .cta-button {
-            background: #FF6B35;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-        
-        .cta-button:hover {
-            background: #ff5722;
-        }
-    </style>
+    <div class="container" style="padding: 3rem 20px;">
+        <!-- Interactive Solar Diagram -->
+        <div class="solar-diagram" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 2rem; margin-bottom: 3rem; text-align: center; color: white;">
+            <h2>How Solar Works 🔆</h2>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 2rem;">
+                <div class="step">
+                    <div class="step-icon" style="font-size: 3rem;">☀️</div>
+                    <p><strong>1. Sunlight</strong><br>Solar panels capture sunlight</p>
+                </div>
+                <div style="font-size: 2rem;">→</div>
+                <div class="step">
+                    <div class="step-icon" style="font-size: 3rem;">🔌</div>
+                    <p><strong>2. DC Power</strong><br>Panels generate DC electricity</p>
+                </div>
+                <div style="font-size: 2rem;">→</div>
+                <div class="step">
+                    <div class="step-icon" style="font-size: 3rem;">🔄</div>
+                    <p><strong>3. Inverter</strong><br>Converts DC to AC power</p>
+                </div>
+                <div style="font-size: 2rem;">→</div>
+                <div class="step">
+                    <div class="step-icon" style="font-size: 3rem;">🏠</div>
+                    <p><strong>4. Your Home</strong><br>Powers your appliances</p>
+                </div>
+            </div>
+        </div>
 
+        <!-- Interactive Components Cards -->
+        <h2 style="text-align: center; margin: 3rem 0; font-size: 2rem; background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%); -webkit-background-clip: text; background-clip: text; color: transparent;">Key Components 🔧</h2>
+        
+        <div class="components-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; cursor: pointer;">
+                <div style="font-size: 3rem;">🪟</div>
+                <h3>Solar Panels</h3>
+                <p>Capture sunlight and convert to DC electricity</p>
+                <div class="component-detail" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 10px;">
+                    <strong>Fun Fact:</strong> A typical panel produces 250-400 watts!
+                </div>
+            </div>
+            
+            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; cursor: pointer;">
+                <div style="font-size: 3rem;">🔄</div>
+                <h3>Inverter</h3>
+                <p>Converts DC to AC power for your home</p>
+                <div class="component-detail" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 10px;">
+                    <strong>Fun Fact:</strong> Inverters are 95-98% efficient!
+                </div>
+            </div>
+            
+            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; cursor: pointer;">
+                <div style="font-size: 3rem;">🔋</div>
+                <h3>Battery Storage</h3>
+                <p>Store excess energy for nighttime use</p>
+                <div class="component-detail" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 10px;">
+                    <strong>Fun Fact:</strong> Lithium-ion batteries last 10-15 years!
+                </div>
+            </div>
+            
+            <div class="component-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; cursor: pointer;">
+                <div style="font-size: 3rem;">📊</div>
+                <h3>Monitoring System</h3>
+                <p>Track your solar production in real-time</p>
+                <div class="component-detail" style="display: none; margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 10px;">
+                    <strong>Fun Fact:</strong> Monitor from your phone!
+                </div>
+            </div>
+        </div>
+
+        <!-- System Types Comparison -->
+        <h2 style="text-align: center; margin: 3rem 0; font-size: 2rem;">System Types ⚡</h2>
+        
+        <div class="system-types" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <div class="system-card" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center;">
+                <div style="font-size: 2.5rem;">🏠</div>
+                <h3>Grid-Tied</h3>
+                <p>Connected to utility grid, no battery needed</p>
+                <ul style="text-align: left; margin-top: 1rem;">
+                    <li>✅ Lowest cost</li>
+                    <li>✅ Net metering benefits</li>
+                    <li>❌ No power during outage</li>
+                </ul>
+            </div>
+            
+            <div class="system-card" style="background: linear-gradient(135deg, #FF9800 0%, #fb8c00 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center;">
+                <div style="font-size: 2.5rem;">🏠🔋</div>
+                <h3>Hybrid</h3>
+                <p>Grid-connected with battery backup</p>
+                <ul style="text-align: left; margin-top: 1rem;">
+                    <li>✅ Best of both worlds</li>
+                    <li>✅ Power during outages</li>
+                    <li>💰 Higher initial cost</li>
+                </ul>
+            </div>
+            
+            <div class="system-card" style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white; padding: 1.5rem; border-radius: 15px; text-align: center;">
+                <div style="font-size: 2.5rem;">🏔️</div>
+                <h3>Off-Grid</h3>
+                <p>Complete independence from utility</p>
+                <ul style="text-align: left; margin-top: 1rem;">
+                    <li>✅ Energy independence</li>
+                    <li>✅ Perfect for remote areas</li>
+                    <li>💰 Highest initial cost</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Solar Calculator -->
+        <div style="background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%); border-radius: 20px; padding: 2rem; margin: 3rem 0; color: white;">
+            <h2 style="text-align: center;">Quick Solar Savings Calculator 🧮</h2>
+            <div style="max-width: 400px; margin: 2rem auto;">
+                <input type="number" id="calcBill" placeholder="Monthly bill (₹)" style="width: 100%; padding: 1rem; border-radius: 10px; border: none; margin-bottom: 1rem;">
+                <button onclick="calculateQuickSavings()" class="cta-button" style="width: 100%; background: white; color: #FF6B35;">Calculate Savings →</button>
+                <div id="calcResult" style="margin-top: 2rem; text-align: center; display: none;"></div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 3rem 0;">
+            <h3>Ready to check your home's potential?</h3>
+            <a href="assessment.html" class="cta-button" style="margin-top: 1rem; display: inline-block;">Start Free Assessment →</a>
+        </div>
+    </div>
+
+    <script>
+        // Interactive component cards
+        document.querySelectorAll('.component-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const detail = this.querySelector('.component-detail');
+                if (detail.style.display === 'none' || !detail.style.display) {
+                    detail.style.display = 'block';
+                } else {
+                    detail.style.display = 'none';
+                }
+            });
+        });
+        
+        // Quick savings calculator
+        function calculateQuickSavings() {
+            const bill = document.getElementById('calcBill').value;
+            if (!bill) {
+                alert('Please enter your monthly bill');
+                return;
+            }
+            
+            const annualBill = bill * 12;
+            const potentialSavings = annualBill * 0.7; // 70% savings estimate
+            const paybackYears = (150000 / potentialSavings).toFixed(1); // ₹1.5L system cost
+            
+            const resultDiv = document.getElementById('calcResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h3>Estimated Savings</h3>
+                <p>Annual Savings: <strong>₹${potentialSavings.toLocaleString()}</strong></p>
+                <p>Payback Period: <strong>${paybackYears} years</strong></p>
+                <p style="margin-top: 1rem;">Get a personalized assessment for accurate numbers!</p>
+            `;
+        }
+    </script>
+    
     <script src="js/auth.js"></script>
 </body>
 </html>
