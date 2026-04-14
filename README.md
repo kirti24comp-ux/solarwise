@@ -9,35 +9,35 @@
 
 ---
 
-## 🚀 Quick Features
+##  Quick Features
 
 | Feature | Description |
 |---------|-------------|
-| 🔐 **User Accounts** | Sign up, login, save assessments |
-| 📍 **Location Based** | Works anywhere using NASA satellite data |
-| 💰 **₹ Savings** | All calculations in Indian Rupees |
-| 📊 **Solar Score** | 0-100 rating for your home |
-| 🎓 **Learn Section** | Solar basics explained simply |
-| 🗑️ **Delete Account** | Remove account & all data |
+|  **User Accounts** | Sign up, login, save assessments |
+|  **Location Based** | Works anywhere using NASA satellite data |
+|  **₹ Savings** | All calculations in Indian Rupees |
+|  **Solar Score** | 0-100 rating for your home |
+|  **Learn Section** | Solar basics explained simply |
+|  **Delete Account** | Remove account & all data |
 
 ---
 
-## 🏗️ How It Works
+##  How It Works
 
 ### Solar Score Formula
 
 | Component | Max Points | What It Means |
 |-----------|------------|---------------|
-| ☀️ Sunlight | 40 | How much sun your location gets |
-| 🏠 Roof Area | 20 | Space available for panels |
-| 🌳 Shading | 20 | Trees/buildings blocking sun |
-| 💰 Savings | 20 | Money you'll save on bills |
+|  Sunlight | 40 | How much sun your location gets |
+|  Roof Area | 20 | Space available for panels |
+|  Shading | 20 | Trees/buildings blocking sun |
+|  Savings | 20 | Money you'll save on bills |
 
 **Total Score 0-100 → Recommendation**
 
 ---
 
-## 💻 Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |-------|------------|
@@ -48,19 +48,19 @@
 
 ---
 
-## 🔌 APIs Used
+## APIs Used
 
-### 1. NASA POWER API (Free, no key needed)
-- **What it does:** Gives solar radiation data for any location
-- **Why needed:** Tells how much sunlight your home gets
+### 1. NASA POWER API 
+ Gives solar radiation data for any location
 
-### 2. OpenWeatherMap API (Free, needs key)
-- **What it does:** Converts city name to coordinates
-- **Why needed:** So you can type "Mumbai" instead of coordinates
+
+### 2. OpenWeatherMap API 
+ Converts city name to coordinates
+
 
 ---
 
-## 📊 Database Tables
+##  Database Tables
 
 | Table | What it stores |
 |-------|----------------|
@@ -71,24 +71,11 @@
 
 ---
 
-## 📱 App Flow
+##  App Flow
 
-```mermaid
-flowchart LR
-    A[Homepage] --> B{Have account?}
-    B -->|No| C[Sign Up]
-    B -->|Yes| D[Login]
-    C --> D
-    D --> E[Profile Page]
-    
-    A --> F[Take Assessment]
-    F --> G[Enter location & bill]
-    G --> H[Get Solar Score]
-    H --> I{Save?}
-    I -->|Yes| E
-    I -->|No| F
+<img width="1218" height="484" alt="image" src="https://github.com/user-attachments/assets/3028dd41-9080-438d-ab00-68780275343e" />
 
-    Calculation Example
+Calculation Example
 Input:
 
 Location: Delhi
@@ -110,23 +97,45 @@ System Size: 3.5 kW
 Annual Savings: ₹15,000
 
 Payback: 8-10 years
-Snapshots of the platform which shows the homepage, Solar Potential and Basics of Solar
+
+Snapshots of the platform which shows the following: 
+Homepage
 <img width="1919" height="1076" alt="image" src="https://github.com/user-attachments/assets/b54b089d-23b4-40aa-8192-bb8d3471d828" />
+
+Solar Potential Form
 <img width="1908" height="1017" alt="image" src="https://github.com/user-attachments/assets/ae932aca-dedd-40e5-8b21-eaaaf7a7217a" />
+
+Solar Potential Result
 <img width="1715" height="1004" alt="image" src="https://github.com/user-attachments/assets/5c84c7c8-bc57-4ffd-bd6a-5680ea39a0be" />
+
+Basics of Solar
 <img width="1411" height="1015" alt="image" src="https://github.com/user-attachments/assets/3f2db267-26fc-404d-876a-7cd9999d31b7" />
 
 
 
 Challenges Faced & Solutions
 
-Challenge	                                 Solution
+Challenge	   
 
-CORS error (frontend can't talk to backend)	Added Flask-CORS with proper headers
-Deleting user should delete all data	      MySQL FOREIGN KEY with ON DELETE CASCADE
-Dollar to Rupee conversion	Changed all calculations to ₹7/kWh rate
+CORS error (frontend can't talk to backend)	
 
-  Contributors
-Name	      	Contributions
-Kirti Nair	   MySQL database and backend, API Integration
-Kirtana Minoy  Frontend UI
+Deleting user should delete all data
+
+Dollar to Rupee conversion	
+
+Solution
+
+Added Flask-CORS with proper headers
+
+MySQL FOREIGN KEY with ON DELETE CASCADE
+
+Changed all calculations to ₹7/kWh rate
+
+
+Contributors
+
+Kirti Nair	   
+MySQL database and backend, API Integration
+
+Kirtana Minoy  
+Frontend UI
