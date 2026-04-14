@@ -38,11 +38,11 @@
                 <a href="assessment.html" class="cta-button">New Assessment →</a>
             </div>
 
-            <!-- Danger Zone - Account Deletion -->
+            <!-- Danger Zone - Account Deletion - NOW REDIRECTS TO delete.html -->
             <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #ddd;">
                 <h3 style="color: #c62828;">⚠️ Danger Zone</h3>
                 <p style="color: #666; margin-bottom: 1rem;">Once you delete your account, there is no going back. All your assessments will be permanently deleted.</p>
-                <button id="deleteAccountBtn" class="delete-account-btn">Delete My Account</button>
+                <a href="delete.html" class="delete-account-link">Delete My Account →</a>
             </div>
         </div>
     </div>
@@ -150,18 +150,19 @@
             background: #45b7aa;
         }
         
-        .delete-account-btn {
+        /* Updated Delete Account Link Style */
+        .delete-account-link {
+            display: inline-block;
             background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
             color: white;
-            border: none;
+            text-decoration: none;
             padding: 0.8rem 1.5rem;
             border-radius: 10px;
-            cursor: pointer;
             font-weight: 600;
             transition: transform 0.3s, box-shadow 0.3s;
         }
         
-        .delete-account-btn:hover {
+        .delete-account-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(198,40,40,0.3);
         }

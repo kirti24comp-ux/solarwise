@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account - SolarWise</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .delete-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .warning-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .warning-title {
+            color: #c62828;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .warning-message {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .consequence-list {
+            text-align: left;
+            background: #ffebee;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+        
+        .consequence-list ul {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .consequence-list li {
+            margin: 0.5rem 0;
+            color: #c62828;
+        }
+        
+        .confirmation-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-family: monospace;
+            font-size: 1.2rem;
+        }
+        
+        .confirmation-input:focus {
+            outline: none;
+            border-color: #c62828;
+            box-shadow: 0 0 10px rgba(198,40,40,0.3);
+        }
+        
+        .delete-btn {
+            background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .delete-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(198,40,40,0.3);
+        }
+        
+        .delete-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .cancel-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .cancel-btn:hover {
+            background: #555;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #c62828;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        .user-info-box {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🌞 SolarWise</div>
+            <ul class="nav-links" id="navLinks"></ul>
+        </div>
+    </nav>
+
+    <div class="delete-container">
+        <div class="warning-icon">⚠️🗑️</div>
+        <h1 class="warning-title">Delete Account</h1>
+        
+        <div id="userInfo" class="user-info-box" style="display: none;">
+            <p><strong>👤 Account:</strong> <span id="displayUsername"></span></p>
+            <p><strong>📧 Email:</strong> <span id="displayEmail"></span></p>
+        </div>
+        
+        <div class="warning-message">
+            <p>You are about to permanently delete your SolarWise account.</p>
+        </div>
+        
+        <div class="consequence-list">
+            <strong>⚠️ This action CANNOT be undone. You will lose:</strong>
+            <ul>
+                <li>🔴 All your saved solar assessments</li>
+                <li>🔴 Your account information and profile</li>
+                <li>🔴 Any saved preferences and settings</li>
+                <li>🔴 Access to your assessment history</li>
+            </ul>
+        </div>
+        
+        <div>
+            <p>To confirm deletion, type <strong style="color: #c62828;">"DELETE"</strong> below:</p>
+            <input type="text" id="confirmText" class="confirmation-input" placeholder="Type DELETE here" autocomplete="off">
+        </div>
+        
+        <button id="deleteBtn" class="delete-btn" disabled>Permanently Delete Account</button>
+        <button id="cancelBtn" class="cancel-btn">Cancel → Back to Profile</button>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Deleting your account...</p>
+        </div>
+        
+        <div id="resultMessage"></div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', async function() {
+            await checkLoginStatus();
+            setupEventListeners();
+            updateNavigation();
+        });
+        
+        async function checkLoginStatus() {
+            try {
+                const response = await fetch('http://localhost:5000/api/me', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // User is logged in, show user info
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
+                    document.getElementById('userInfo').style.display = 'block';
+                    document.getElementById('displayUsername').textContent = data.user.username;
+                    document.getElementById('displayEmail').textContent = data.user.email;
+                } else {
+                    // Not logged in, redirect to login
+                    sessionStorage.setItem('redirectAfterLogin', 'delete.html');
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+                window.location.href = 'login.html';
+            }
+        }
+        
+        function setupEventListeners() {
+            const confirmInput = document.getElementById('confirmText');
+            const deleteBtn = document.getElementById('deleteBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            
+            // Enable delete button only when user types "DELETE"
+            confirmInput.addEventListener('input', function() {
+                if (this.value === 'DELETE') {
+                    deleteBtn.disabled = false;
+                } else {
+                    deleteBtn.disabled = true;
+                }
+            });
+            
+            // Handle delete button click
+            deleteBtn.addEventListener('click', handleDeleteAccount);
+            
+            // Handle cancel button - go back to profile
+            cancelBtn.addEventListener('click', function() {
+                window.location.href = 'profile.html';
+            });
+        }
+        
+        async function handleDeleteAccount() {
+            const loadingDiv = document.getElementById('loading');
+            const deleteBtn = document.getElementById('deleteBtn');
+            const resultDiv = document.getElementById('resultMessage');
+            
+            // Show loading
+            loadingDiv.style.display = 'block';
+            deleteBtn.disabled = true;
+            resultDiv.innerHTML = '';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/delete-account', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Success - account deleted
+                    resultDiv.innerHTML = `
+                        <div class="success-message">
+                            ✅ ${data.message || 'Account deleted successfully!'}<br>
+                            Redirecting to home page...
+                        </div>
+                    `;
+                    
+                    // Clear session storage
+                    sessionStorage.removeItem('user');
+                    
+                    // Redirect after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    // Error
+                    resultDiv.innerHTML = `
+                        <div class="error-message">
+                            ❌ Error: ${data.error || 'Failed to delete account'}<br>
+                            Please try again or contact support.
+                        </div>
+                    `;
+                    loadingDiv.style.display = 'none';
+                    
+                    // Re-check confirmation text
+                    const confirmInput = document.getElementById('confirmText');
+                    if (confirmInput.value === 'DELETE') {
+                        deleteBtn.disabled = false;
+                    }
+                }
+            } catch (error) {
+                console.error('Delete account error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error-message">
+                        ❌ Connection error: ${error.message}<br>
+                        Please make sure the backend server is running on port 5000.
+                    </div>
+                `;
+                loadingDiv.style.display = 'none';
+                
+                // Re-enable button if confirmation still matches
+                const confirmInput = document.getElementById('confirmText');
+                if (confirmInput.value === 'DELETE') {
+                    deleteBtn.disabled = false;
+                }
+            }
+        }
+        
+        function updateNavigation() {
+            const user = sessionStorage.getItem('user');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (!navLinks) return;
+            
+            if (user) {
+                const userData = JSON.parse(user);
+                navLinks.innerHTML = `
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="assessment.html">Check Your Solar Potential</a></li>
+                    <li><a href="learn.html">Solar Basics</a></li>
+                    <li><a href="profile.html">My Profile</a></li>
+                    <li><a href="#" id="navLogoutBtn">Logout</a></li>
+                `;
+                
+                const logoutBtn = document.getElementById('navLogoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        await fetch('http://localhost:5000/api/logout', { 
+                            method: 'POST', 
+                            credentials: 'include' 
+                        });
+                        sessionStorage.removeItem('user');
+                        window.location.href = 'index.html';
+                    });
+                }
+            } else {
+                navLinks.innerHTML = `
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="assessment.html">Check Your Solar Potential</a></li>
+                    <li><a href="learn.html">Solar Basics</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="signup.html">Sign Up</a></li>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

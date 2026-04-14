@@ -8,13 +8,18 @@ import secrets
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from auth import AuthManager
+from flask_cors import CORS
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_hex(32))
-CORS(app, supports_credentials=True, origins=['http://localhost:8000'])
+CORS(app, 
+     supports_credentials=True, 
+     origins=['http://localhost:8000', 'http://127.0.0.1:8000'],
+     allow_headers=['Content-Type', 'Authorization'],
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
 
 # Database connection
 db = mysql.connector.connect(
