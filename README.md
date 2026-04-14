@@ -134,8 +134,8 @@ Changed all calculations to ₹7/kWh rate
 
 Contributors
 
-Kirti Nair	   
+Kirti Nair	 CEB435  
 MySQL database and backend, API Integration
 
-Kirtana Minoy  
+Kirtana Minoy  CEB428
 Frontend UI
