@@ -5,13 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Solar Results - SolarWise</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .results-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+        }
+        
+        .score-card {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .score-number {
+            font-size: 5rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+        
+        .score-label {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .result-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FF6B35;
+            display: block;
+        }
+        
+        .recommendation-box {
+            background: #e3f2fd;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+        
+        .btn-secondary {
+            background: #4ECDC4;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button {
+            background: #FF6B35;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo">🌞 SolarWise</div>
             <ul class="nav-links" id="navLinks">
-                <!-- Will be populated by JavaScript -->
+                <li><a href="index.html">Home</a></li>
+                <li><a href="assessment.html">Check Your Solar Potential</a></li>
+                <li><a href="learn.html">Solar Basics</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
             </ul>
         </div>
     </nav>
@@ -42,109 +128,151 @@
         </div>
         
         <div class="recommendation-box" id="recommendation">
-            <!-- Dynamic recommendation will go here -->
+            <p>Loading your results...</p>
         </div>
         
         <div style="margin: 2rem 0; text-align: center;">
             <h3>Score Breakdown</h3>
-            <canvas id="scoreChart" width="400" height="200"></canvas>
+            <canvas id="scoreChart" width="400" height="200" style="max-width: 100%; height: auto;"></canvas>
         </div>
         
-        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+        <div class="btn-group">
             <a href="assessment.html" class="btn-secondary">← New Assessment</a>
             <a href="learn.html" class="cta-button">Learn About Solar →</a>
         </div>
     </div>
 
-    <style>
-        .results-container {
-            max-width: 1000px;
-            margin: 3rem auto;
-            padding: 2rem;
+    <script>
+        console.log("Results page loaded");
+        
+        // Load results when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadResults();
+        });
+        
+        function loadResults() {
+            console.log("loadResults function called");
+            
+            // Try to get results from sessionStorage
+            const resultsJson = sessionStorage.getItem('solarResults');
+            console.log("Raw results from sessionStorage:", resultsJson);
+            
+            if (!resultsJson) {
+                console.log("No results found, redirecting to assessment");
+                document.getElementById('recommendation').innerHTML = 
+                    '<p style="color: red;">No assessment data found. Please complete the assessment first.</p>' +
+                    '<a href="assessment.html" class="cta-button">Go to Assessment</a>';
+                return;
+            }
+            
+            try {
+                const data = JSON.parse(resultsJson);
+                console.log("Parsed data:", data);
+                
+                // Update DOM elements
+                const scoreElement = document.getElementById('scoreValue');
+                const systemSizeElement = document.getElementById('systemSize');
+                const productionElement = document.getElementById('annualProduction');
+                const savingsElement = document.getElementById('annualSavings');
+                const coverageElement = document.getElementById('coverage');
+                const recommendationElement = document.getElementById('recommendation');
+                
+                if (scoreElement) {
+                    scoreElement.textContent = data.solar_potential_score || data.score || 0;
+                }
+                
+                if (systemSizeElement) {
+                    const size = data.estimated_system_size_kw || data.estimated_system_size || 0;
+                    systemSizeElement.textContent = size + ' kW';
+                }
+                
+                if (productionElement) {
+                    const production = data.annual_production_kwh || data.annual_production || 0;
+                    productionElement.textContent = production.toLocaleString() + ' kWh';
+                }
+                
+                if (savingsElement) {
+                    const savings = data.estimated_savings_per_year || data.estimated_savings || 0;
+                    savingsElement.textContent = '₹' + savings.toLocaleString();
+                }
+                
+                if (coverageElement) {
+                    const coverage = data.coverage_percentage || data.coverage || 0;
+                    coverageElement.textContent = coverage + '%';
+                }
+                
+                if (recommendationElement) {
+                    recommendationElement.innerHTML = '<p>' + (data.recommendation || 'Thank you for using SolarWise!') + '</p>';
+                }
+                
+                // Create chart if score_breakdown exists
+                if (data.score_breakdown) {
+                    createScoreChart(data.score_breakdown);
+                } else if (data.score_breakdown) {
+                    createScoreChart(data.score_breakdown);
+                }
+                
+            } catch (error) {
+                console.error("Error parsing results:", error);
+                document.getElementById('recommendation').innerHTML = 
+                    '<p style="color: red;">Error loading results. Please try again.</p>';
+            }
         }
         
-        .score-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 2rem;
+        function createScoreChart(breakdown) {
+            const canvas = document.getElementById('scoreChart');
+            if (!canvas) {
+                console.log("Canvas element not found");
+                return;
+            }
+            
+            console.log("Creating chart with breakdown:", breakdown);
+            
+            // Set canvas size
+            canvas.width = 400;
+            canvas.height = 200;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const categories = ['Sunlight', 'Roof Area', 'Shading', 'Savings'];
+            const values = [
+                breakdown.sunlight || breakdown.sunlight || 0,
+                breakdown.roof_area || breakdown.roof_area || 0,
+                breakdown.shading || breakdown.shading || 0,
+                breakdown.bill_savings || breakdown.bill_savings || 0
+            ];
+            
+            console.log("Chart values:", values);
+            
+            const barWidth = 60;
+            const startX = 50;
+            const maxValue = 40;
+            
+            categories.forEach((cat, i) => {
+                const x = startX + (i * 80);
+                const height = (values[i] / maxValue) * 150;
+                const y = 180 - height;
+                
+                ctx.fillStyle = '#FF6B35';
+                ctx.fillRect(x, y, barWidth, height);
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.fillText(cat, x + 15, 195);
+                
+                ctx.fillStyle = '#666';
+                ctx.font = '10px Arial';
+                ctx.fillText(values[i].toFixed(1), x + 25, y - 5);
+            });
         }
         
-        .score-number {
-            font-size: 4rem;
-            font-weight: 700;
-            display: block;
-            line-height: 1;
-        }
-        
-        .score-label {
-            font-size: 1.5rem;
-            opacity: 0.9;
-        }
-        
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .result-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-        
-        .result-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #FF6B35;
-            display: block;
-        }
-        
-        .recommendation-box {
-            background: #e3f2fd;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 2rem;
-        }
-        
-        .btn-secondary {
-            background: #4ECDC4;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            transition: background 0.3s;
-        }
-        
-        .btn-secondary:hover {
-            background: #45b7aa;
-        }
-        
-        .cta-button {
-            background: #FF6B35;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            transition: background 0.3s;
-        }
-        
-        .cta-button:hover {
-            background: #ff5722;
-        }
-    </style>
-
-    <script src="js/auth.js"></script>
-    <script src="js/app.js"></script>
+        // Also check on page load
+        window.addEventListener('load', function() {
+            console.log("Window loaded, checking results again");
+            if (!sessionStorage.getItem('solarResults')) {
+                console.log("Still no results");
+            }
+        });
+    </script>
 </body>
 </html>

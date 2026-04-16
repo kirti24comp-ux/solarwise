@@ -1,4 +1,4 @@
-// Authentication management
+// frontend/js/auth.js - CLEAN VERSION (no duplicate functions)
 
 // Check if user is logged in on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutBtn.addEventListener('click', handleLogout);
     }
     
-    // Handle delete account button - ADD THIS SECTION
+    // Handle delete account button
     const deleteAccountBtn = document.getElementById('deleteAccountBtn');
     if (deleteAccountBtn) {
         console.log("Delete account button found");
@@ -84,8 +84,8 @@ async function handleSignup(e) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const confirm_password = document.getElementById('confirm_password').value;
-    const first_name = document.getElementById('first_name').value;
-    const last_name = document.getElementById('last_name').value;
+    const first_name = document.getElementById('first_name')?.value || '';
+    const last_name = document.getElementById('last_name')?.value || '';
     const errorDiv = document.getElementById('errorMessage');
     const successDiv = document.getElementById('successMessage');
     
@@ -148,7 +148,7 @@ async function handleLogout() {
     }
 }
 
-// Handle delete account - ADD THIS NEW FUNCTION
+// Handle delete account
 async function handleDeleteAccount() {
     console.log("Delete account function called");
     
@@ -203,41 +203,21 @@ async function checkAuthStatus() {
     }
 }
 
-// Update navigation based on login status
+// Update navigation - FIXED to original design
 function updateNavigation() {
-    const user = sessionStorage.getItem('user');
     const navLinks = document.getElementById('navLinks');
     
     if (!navLinks) return;
     
-    if (user) {
-        const userData = JSON.parse(user);
-        navLinks.innerHTML = `
-            <li><a href="index.html">Home</a></li>
-            <li><a href="assessment.html">Check Your Solar Potential</a></li>
-            <li><a href="learn.html">Solar Basics</a></li>
-            <li><a href="profile.html">My Profile</a></li>
-            <li><a href="#" id="navLogoutBtn">Logout</a></li>
-        `;
-        
-        const logoutBtn = document.getElementById('navLogoutBtn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                handleLogout();
-            });
-        }
-    } else {
-        navLinks.innerHTML = `
-            <li><a href="index.html">Home</a></li>
-            <li><a href="assessment.html">Check Your Solar Potential</a></li>
-            <li><a href="learn.html">Solar Basics</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="signup.html">Sign Up</a></li>
-        `;
-    }
+    // This is the original navbar design - never changes
+    navLinks.innerHTML = `
+        <li><a href="index.html">Home</a></li>
+        <li><a href="assessment.html">Check Your Solar Potential</a></li>
+        <li><a href="learn.html">Solar Basics</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+    `;
 }
-
 // Load user profile data
 async function loadUserProfile() {
     const user = sessionStorage.getItem('user');
@@ -248,11 +228,20 @@ async function loadUserProfile() {
     }
     
     const userData = JSON.parse(user);
-    document.getElementById('userName').textContent = `${userData.first_name || ''} ${userData.last_name || ''}`.trim() || userData.username;
-    document.getElementById('userEmail').textContent = userData.email;
+    const userNameElem = document.getElementById('userName');
+    const userEmailElem = document.getElementById('userEmail');
+    const memberSinceElem = document.getElementById('memberSince');
     
-    const memberSince = new Date(userData.created_at).toLocaleDateString();
-    document.getElementById('memberSince').innerHTML = `<strong>Member since:</strong> ${memberSince}`;
+    if (userNameElem) {
+        userNameElem.textContent = `${userData.first_name || ''} ${userData.last_name || ''}`.trim() || userData.username;
+    }
+    if (userEmailElem) {
+        userEmailElem.textContent = userData.email;
+    }
+    if (memberSinceElem && userData.created_at) {
+        const memberSince = new Date(userData.created_at).toLocaleDateString();
+        memberSinceElem.innerHTML = `<strong>Member since:</strong> ${memberSince}`;
+    }
 }
 
 // Load user's assessments
@@ -266,7 +255,9 @@ async function loadUserAssessments() {
         const data = await response.json();
         const assessmentsList = document.getElementById('assessmentsList');
         
-        if (data.success && data.assessments.length > 0) {
+        if (!assessmentsList) return;
+        
+        if (data.success && data.assessments && data.assessments.length > 0) {
             assessmentsList.innerHTML = data.assessments.map(assessment => `
                 <div class="assessment-card">
                     <h4>Assessment from ${new Date(assessment.created_at).toLocaleDateString()}</h4>
@@ -300,7 +291,9 @@ async function loadUserAssessments() {
         }
     } catch (error) {
         console.error('Error loading assessments:', error);
-        document.getElementById('assessmentsList').innerHTML = '<p>Error loading assessments. Please try again later.</p>';
+        if (document.getElementById('assessmentsList')) {
+            document.getElementById('assessmentsList').innerHTML = '<p>Error loading assessments. Please try again later.</p>';
+        }
     }
 }
 

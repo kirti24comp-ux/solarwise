@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Solar API</title>
+</head>
+<body>
+    <h1>Test Solar API</h1>
+    <button onclick="testAPI()">Test API</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testAPI() {
+            document.getElementById('result').innerHTML = "Testing...";
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/assess-solar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        lat: 19.0760,
+                        lon: 72.8777,
+                        location_name: "Mumbai",
+                        monthly_bill: 1500,
+                        roof_area: 500,
+                        shading: "moderate",
+                        roof_condition: "good"
+                    })
+                });
+                
+                const data = await response.json();
+                document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('result').innerHTML = "Error: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
